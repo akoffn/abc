@@ -1,0 +1,3 @@
+Method,S=2.2,sigma=0.0,S=2.5,sigma=0.0,S=2.5,sigma=1.0
+C1 (fixed GAIN=40),8.370,18.864,18.864
+C2 (gain scheduling),4.821,5.414,5.414

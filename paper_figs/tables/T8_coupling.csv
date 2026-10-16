@@ -1,0 +1,3 @@
+Type,Objects,Mechanism,Observation,Treatment
+Compensation,C2 vs lambda,Both stabilize; over-damping,lambda>=0.15: +25~42%,"Effective range lambda in (0.01,0.15)"
+Disturbance,S vs sigma,External superposition,Approximately additive,One sentence in Discussion

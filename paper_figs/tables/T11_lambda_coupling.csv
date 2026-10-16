@@ -1,0 +1,5 @@
+lambda,C1_err,C2_err,note
+0.01,129.54,123.68,IK breakdown (unreproducible)
+0.05,8.37,4.82,C2 main working range (-42%)
+0.15,6.55,9.28,C2 over-damps (+42%)
+0.30,9.28,13.11,C2 over-damps (+41%)

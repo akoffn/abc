@@ -1,0 +1,11 @@
+Parameter,Value
+Stiffness S,"0.5-5.0, 24 points"
+Noise sigma,"0-5.0 mm, 11 levels"
+GAIN,20 / 30 / 40
+DLS damping lambda,0.05 / 0.15 / 0.30
+Trajectory,8-shape / circle / spiral
+dt,0.001 s
+Control freq,50 Hz
+Sim horizon,20 s
+Steady-state window,"t in (10,20] s, n=499"
+Command clip,1.0
