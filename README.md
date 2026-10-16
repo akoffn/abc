@@ -1,6 +1,14 @@
 # OpenCR-MuJoCo
 
-> **This repository is the codebase for the paper *"Condition-Number-Triggered Gain Scheduling for Inverse Kinematics Control of Tendon-Driven Continuum Robots"* (EI conference).** The included experiments reproduce the C1 (native controller) vs C2 (cond_J-triggered gain scheduling) comparison: C2 reduces tracking error in the degraded stiffness region by 42%–71% and zeroes the saturation rate.
+## Paper
+
+**Condition-Number-Triggered Gain Scheduling for Inverse Kinematics Control of Tendon-Driven Continuum Robots**
+
+**摘要**
+
+腱驱动连续体机器人（TDCR）的任务空间逆运动学控制器在高刚度工况下会出现性能退化。本文针对原生控制器（C1）的退化问题，提出基于雅可比条件数（cond_J）的增益调度策略 C2。实验表明，cond_J 的滑动窗均值超过阈值的时间占比随刚度单调上升（S=1.0 时 0%，S=2.5 时 35.41%），可作为在线工况指标。C2 据此在 cond_J 高时降低增益（40→20），低时恢复。在五个刚度工况下，C2 将退化区误差降低 42%~71%，饱和率归零，低刚度下无额外精度损失。C2 有效缓解了 S≤2.5 的增益失配区；当 S≥3.0 时，系统进入物理饱和截断，超出算法可控范围，这明确了 C2 的适用边界。
+
+**关键词：** 腱驱动连续体机器人；逆运动学；增益调度；雅可比条件数；饱和截断；工况指标
 
 <p align="center">
   <img src="docs/media/tdcr_tip_trace.gif" width="32%" alt="TDCR tracing a figure-8 with its tip (closed-loop task-space IK)"/>
