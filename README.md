@@ -162,28 +162,6 @@ MIT License — see [LICENSE](LICENSE). The bundled Franka Panda meshes under
 `assets/franka_assets/` are from franka_ros (Apache 2.0 — see
 `assets/franka_assets/LICENSE.md`).
 
-## Citation
-
-If you use this codebase or its results in your research, please cite:
-
-**Condition-Number-Triggered Gain Scheduling for Inverse Kinematics Control of Tendon-Driven Continuum Robots**
-
-- Authors: *[to be added]*
-- Affiliation: *[to be added]*
-- Venue: EI-indexed conference, *[to be added]*
-- Year: *[to be added]*
-- Paper link: *[to be added]*
-
-```bibtex
-@inproceedings{tdcr_condj_gain_scheduling,
-  title     = {Condition-Number-Triggered Gain Scheduling for Inverse
-               Kinematics Control of Tendon-Driven Continuum Robots},
-  author    = {[to be added]},
-  booktitle = {[to be added]},
-  year      = {[to be added]},
-}
-```
-
 ## Acknowledgments
 
 - Franka robot assets from franka_ros
