@@ -30,6 +30,8 @@ C2 用雅可比条件数 cond_J 在线触发降增益（40→20），在高刚�
 
 ## 快速开始（复现论文）
 
+> **运行环境说明：** 脚本内置路径 `/root/opencr-mujoco-main/...` 来自实验所用代码平台（Linux）环境。复现论文结果需要在代码平台（或任意把仓库放在 `/root/opencr-mujoco-main` 的 Linux 环境）中运行；Windows 本地需先替换脚本中的路径。
+
 ```bash
 pip install -r requirements.txt
 
