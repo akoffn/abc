@@ -1,169 +1,66 @@
-# OpenCR-MuJoCo
+# Condition-Number-Triggered Gain Scheduling for Inverse Kinematics Control of Tendon-Driven Continuum Robots
 
-## Paper
+Repository for the paper. OpenCR-MuJoCo is used as the evaluation platform
+(backbone discretized into a rigid-link chain with elastic joints, tendons
+actuated by MuJoCo's native tendon model, calibrated against SoRoSim
+Cosserat-rod solutions).
 
-**Condition-Number-Triggered Gain Scheduling for Inverse Kinematics Control of Tendon-Driven Continuum Robots**
+## 一句话
 
-**摘要**
+C2 用雅可比条件数 cond_J 在线触发降增益（40→20），在高刚度退化区把跟踪误差降低 42%~71%，饱和率归零，低刚度无额外精度损失。
+
+## 效果图
+
+<p align="center">
+  <img src="paper_figs/fig2_C1_vs_C2.png" width="70%" alt="C1 vs C2: error vs stiffness"/>
+</p>
+
+## Abstract（论文摘要）
 
 腱驱动连续体机器人（TDCR）的任务空间逆运动学控制器在高刚度工况下会出现性能退化。本文针对原生控制器（C1）的退化问题，提出基于雅可比条件数（cond_J）的增益调度策略 C2。实验表明，cond_J 的滑动窗均值超过阈值的时间占比随刚度单调上升（S=1.0 时 0%，S=2.5 时 35.41%），可作为在线工况指标。C2 据此在 cond_J 高时降低增益（40→20），低时恢复。在五个刚度工况下，C2 将退化区误差降低 42%~71%，饱和率归零，低刚度下无额外精度损失。C2 有效缓解了 S≤2.5 的增益失配区；当 S≥3.0 时，系统进入物理饱和截断，超出算法可控范围，这明确了 C2 的适用边界。
 
 **关键词：** 腱驱动连续体机器人；逆运动学；增益调度；雅可比条件数；饱和截断；工况指标
 
-<p align="center">
-  <img src="docs/media/tdcr_tip_trace.gif" width="32%" alt="TDCR tracing a figure-8 with its tip (closed-loop task-space IK)"/>
-  <img src="docs/media/franka_tdcr_trace.gif" width="32%" alt="Station-keeping: the Franka sweeps a figure-8 while the TDCR pins its tip to the red point"/>
-  <img src="docs/media/kick_goal.gif" width="32%" alt="Elastic whip kick: the TDCR bends hard away, springs back, and strikes a ball into the goal"/>
-</p>
-<p align="center"><sub>
-Closed-loop figure-8 tip tracing&nbsp;&nbsp;·&nbsp;&nbsp;station-keeping
-against arm motion&nbsp;&nbsp;·&nbsp;&nbsp;an elastic whip kick into the
-goal — all from
-<a href="examples/trace_tip_demo.py"><code>examples/trace_tip_demo.py</code></a>
-(<a href="docs/media/tdcr_tip_trace.mp4">HQ</a>&nbsp;·&nbsp;<a href="docs/media/franka_tdcr_trace.mp4">HQ</a>&nbsp;·&nbsp;<a href="docs/media/kick_goal.mp4">HQ</a>)
-</sub></p>
+## 方法（4 句）
 
-Native [MuJoCo](https://mujoco.org) simulation of **tendon-driven continuum
-robots (TDCRs)** by discretizing the continuum backbone into a serial chain of
-rigid links with elastic joints.
+- **C1（基线）**：固定增益 GAIN=40 的任务空间 IK 控制器；高刚度下退化，S=2.5 时误差达 18.86 mm、饱和率 23.85%。
+- **观测**：cond_J 的 20 步滑动窗均值超过阈值的时间占比随刚度单调上升（S=1.0→0%，S=2.5→35.41%），可作为在线工况指标。
+- **C2**：cond_J 高时降低增益（40→20），低时恢复；切换带 C_up=160 / C_down=70，非对称渐变（降 5 步，升 50 步）。
+- **结果**：S=2.2 误差 8.37→4.82 mm，S=2.5 误差 18.86→5.41 mm（降幅 42%~71%），C2 饱和率全为 0；S≥3.0 进入物理饱和截断，超出算法可控范围。
 
-The backbone rod is split into `N` links bounded by half-links, joined by
-hinge pairs (or triples, adding torsion) whose stiffness comes from beam
-theory (`N·EI/L` per joint, `G·J` for torsion), with tendons routed through
-per-link sites and actuated natively by MuJoCo's tendon model. The approach is
-validated against [SoRoSim](https://github.com/SoRoSim/SoRoSim)
-Cosserat-rod solutions (statics and dynamics) and supports system
-identification against hardware motion-capture data.
-
-## Features
-
-- **Unified TDCR generator** — single config-driven generator for 1–5 segment
-  TDCRs with 3–4+ tendons per segment, material-based (Young's modulus) or
-  direct stiffness, coupled / independent / tension tendon routing, pretension
-  keyframes, and collision exclusions
-- **Modular (heterogeneous) TDCRs** — compose robots from reusable modules
-  with independent materials and geometry (e.g. stiff base, soft tip)
-- **Evaluation framework** — statics and tip-release dynamics compared against
-  bundled SoRoSim reference data, with arc-length-correct shape errors and
-  publication-quality figures
-- **Teleoperation** — keyboard and PlayStation DualSense control of the TDCR,
-  a Franka Panda arm, or both combined (joint-space, task-space IK, and
-  multi-point task-space modes)
-- **System identification** — 3-step pipeline (geometry → tendon parameters →
-  refinement) calibrating simulation parameters against hardware mocap data
-  (bundled for two hardware TDCRs)
-- **Hardware bridge** — optional Dynamixel bridge mirroring teleop commands to
-  a real TDCR
-
-## Installation
+## 快速开始（复现论文）
 
 ```bash
-git clone https://github.com/ContinuumRoboticsLab/opencr-mujoco.git
-cd opencr-mujoco
+pip install -r requirements.txt
 
-python -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-
-pip install -e .                   # editable install
-pip install -e ".[dev]"            # + pytest/black/flake8
-pip install -e ".[hardware]"       # + Dynamixel SDK (real-robot bridge)
+python 脚本包/28评估脚本/表1.py                  # 表 1：cond_J 信号有效性 + C1/C2 对比
+python 脚本包/28评估脚本/C2泛化_圆形噪声.py       # 表 2：泛化验证数据
+python 脚本包/控制器阈值论证脚本.py               # 图 2：阈值裕度图
+python 脚本包/28评估脚本/C2泛化_圆形噪声_画图.py  # 图 4：泛化效果图
+python 脚本包/全扫描/plot_all.py                 # 图 1 / 图 3：刚度扫描与 C1 vs C2 双线
 ```
 
-Requires Python 3.10+ and MuJoCo ≥ 3.0 (installed automatically from pip).
+## 复现论文
 
-## Quick Start
+| 图表 | 内容 | 命令 |
+|---|---|---|
+| 表 1 | 五行核心表（S=1.0/1.5/2.2/2.5/3.0，触发占比、C1/Fix20/C2 误差与饱和率） | `python 脚本包/28评估脚本/表1.py` |
+| 表 2 | 泛化验证（8 字/圆 × 无噪/加噪，降幅 71%~83%） | `python 脚本包/28评估脚本/C2泛化_圆形噪声.py` |
+| 图 1 | C1 刚度扫描（err vs S，叠加 sat%） | `python 脚本包/全扫描/plot_all.py` |
+| 图 2 | 阈值裕度图（正常组 vs 退化组 cond_J 分布） | `python 脚本包/控制器阈值论证脚本.py` |
+| 图 3 | C1 vs C2 双线（err vs S，三段标注） | `python 脚本包/全扫描/plot_all.py` |
+| 图 4 | 泛化效果（圆形轨迹 + 噪声） | `python 脚本包/28评估脚本/C2泛化_圆形噪声_画图.py` |
 
-> **macOS:** run the GUI commands below (`teleop.py`, `viewer.py`, and the live
-> demo) with `mjpython` instead of `python` — MuJoCo's passive viewer requires
-> it. Plain `python` is fine for `--list-configs`, `--headless`, and `--record`.
+## 数据
 
-```bash
-# Drive a TDCR (hold LSHIFT, then T/F/G/H to bend, Z/X/C to switch segment).
-# Scene XMLs are generated automatically on first use — no setup step.
-python teleop.py --config tdcr_keyboard
+- `数据集/`：C1 / C2 / Fix20 的刚度扫描与噪声扫描 npz（8 字与圆形轨迹，S 与 σ 分档）。
+- 结果按论文表 1 / 表 2 约定汇总，图表输出至 `paper_figs/`。
 
-# ...or watch the gallery demos live (--record <name> re-renders the clips)
-python examples/trace_tip_demo.py --demo kick
+## 依赖与许可
 
-# Look at any model in the passive viewer
-python viewer.py --scene assets/tdcr/example_three_segment_franka.xml
+- Python 3.10+，MuJoCo ≥ 3.0（pip 自动安装）。
+- MIT License，见 [LICENSE](LICENSE)。
 
-# Reproduce the validation against SoRoSim
-python paper_results/evaluate.py --config spring_steel_statics --n-values 50 --early-stop 20
-```
+## 贡献
 
-## Documentation
-
-Every script documents itself — start with `--help` and the usage block at
-the top of the file. The scripts share a JSON config system with precedence
-**CLI args > config file > built-in defaults**; all expose `--list-configs`
-and `--config NAME`, and `viewer.py`/`teleop.py` additionally support
-`--show-config` and `--save-config NAME`.
-
-| Topic | Start here |
-|---|---|
-| Model generation & config options | [`generate.py`](generate.py) · [configs/generation/README.md](configs/generation/README.md) |
-| Teleoperation, keyboard/DualSense controls | [`teleop.py`](teleop.py) (control tables in the docstring) |
-| Scene viewer | [`viewer.py`](viewer.py) |
-| Demos (the GIFs above) | [`examples/trace_tip_demo.py`](examples/trace_tip_demo.py) |
-| SoRoSim validation & paper figures | [paper_results/README.md](paper_results/README.md) |
-| System identification | [opencr_mujoco/sysid/README.md](opencr_mujoco/sysid/README.md) |
-| Controllers & Clark-coordinate control | [opencr_mujoco/controllers/README.md](opencr_mujoco/controllers/README.md) |
-| Bundled reference / mocap data formats | [data/reference/sorosim/README.md](data/reference/sorosim/README.md) |
-| Tests & development tooling | [tests/README.md](tests/README.md) — `python run_tests.py` |
-
-## Development
-
-Install the development extra before working on the code:
-
-```bash
-pip install -e ".[dev]"
-```
-
-Useful checks:
-
-```bash
-black .
-flake8 . --count --statistics
-python run_tests.py --quick
-pytest tests/unit -q
-```
-
-The browser demo is generated from the same Python sources used by the desktop
-tools. Rebuild and serve it locally with:
-
-```bash
-python docs/build_site.py
-python docs/serve.py 8000
-```
-
-Generated TDCR scene XMLs under `assets/tdcr/` are intentionally not tracked;
-the command-line tools regenerate them from `configs/generation/` on first use.
-The small web-demo scene copies under `docs/scenes/` are tracked so GitHub
-Pages can serve the browser simulator. Large policy-rollout videos are hosted
-as GitHub Release assets and should not be committed.
-
-## Contributing
-
-`opencr-mujoco` is an open academic project, and we welcome contributions from
-the community, including:
-
-- Pull requests for new features, bug fixes, examples, or documentation.
-- Bug reports through GitHub Issues.
-- Suggestions that make the simulator easier to install, reproduce, or extend.
-- New CR configurations, validation cases, or controller/evaluation tests.
-
-See our [contribution guide](.github/CONTRIBUTING.md) for development setup,
-testing, and repository hygiene notes.
-
-## License
-
-MIT License — see [LICENSE](LICENSE). The bundled Franka Panda meshes under
-`assets/franka_assets/` are from franka_ros (Apache 2.0 — see
-`assets/franka_assets/LICENSE.md`).
-
-## Acknowledgments
-
-- Franka robot assets from franka_ros
-- SoRoSim reference data generated with
-  [SoRoSim](https://github.com/SoRoSim/SoRoSim)
+欢迎复现或扩展论文实验（新增刚度档位、轨迹、噪声设置），并按表 1 / 表 2 约定汇报结果。详见 [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)。
