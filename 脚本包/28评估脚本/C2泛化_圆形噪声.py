@@ -7,12 +7,16 @@ C2 泛化性：圆形轨迹 + 噪声扫描
 数据源：数据集/C2/S=2.5噪声扫描圆形/
 输出：σ vs err/sat/gain
 """
+import sys as _sys
+from pathlib import Path as _Path
+REPO = str(_Path(__file__).resolve().parents[2])
+_sys.path.insert(0, REPO)
 import glob
 import numpy as np
 from pathlib import Path
 
-DATA = Path("/root/opencr-mujoco-main/数据集/C2/S=2.5噪声扫描圆形")
-OUT  = Path("/root/opencr-mujoco-main/数据集/28/analysis/c2_generalize_circle.csv")
+DATA = Path(f"{REPO}/数据集/C2/S=2.5噪声扫描圆形")
+OUT  = Path(f"{REPO}/数据集/28/analysis/c2_generalize_circle.csv")
 
 
 def meta(d, k, default=np.nan):

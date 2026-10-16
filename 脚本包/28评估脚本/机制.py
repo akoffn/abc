@@ -10,6 +10,10 @@
   C2:       数据集/C2/刚度扫描_8字
   Fix20:    数据集/28/results (G=20 的文件)
 """
+import sys as _sys
+from pathlib import Path as _Path
+REPO = str(_Path(__file__).resolve().parents[2])
+_sys.path.insert(0, REPO)
 import numpy as np, glob
 from pathlib import Path
 
@@ -32,18 +36,18 @@ def fmt(x):
 
 
 def load_c1(S):
-    fs = glob.glob(f"/root/opencr-mujoco-main/数据集/C1/刚度扫描_8字/*S{S}_sig0.0.npz")
+    fs = glob.glob(f"{REPO}/数据集/C1/刚度扫描_8字/*S{S}_sig0.0.npz")
     return np.load(fs[0], allow_pickle=True) if fs else None
 
 
 def load_c2(S):
-    fs = glob.glob(f"/root/opencr-mujoco-main/数据集/C2/刚度扫描_8字/*S{S}_sig0.0.npz")
+    fs = glob.glob(f"{REPO}/数据集/C2/刚度扫描_8字/*S{S}_sig0.0.npz")
     return np.load(fs[0], allow_pickle=True) if fs else None
 
 
 def load_fix20(S):
     fs = glob.glob(
-        f"/root/opencr-mujoco-main/数据集/28/results/"
+        f"{REPO}/数据集/28/results/"
         f"c1_8_S{fmt(S)}_sig0p0_G20p0_lam0p05_seed42.npz"
     )
     return np.load(fs[0], allow_pickle=True) if fs else None
@@ -84,7 +88,7 @@ def main():
               f"{r['C1_sat']:>9.2f} {r['Fix20_err']:>11.2f} {r['C2_err']:>9.2f}")
 
     # 写 CSV（论文用）
-    out = Path("/root/opencr-mujoco-main/数据集/28/analysis/table1_final.csv")
+    out = Path(f"{REPO}/数据集/28/analysis/table1_final.csv")
     out.parent.mkdir(parents=True, exist_ok=True)
     with open(out, 'w') as f:
         f.write("S,frac_above_160,C1_err,C1_sat_pct,Fix20_err,C2_err\n")

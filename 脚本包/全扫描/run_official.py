@@ -1,8 +1,12 @@
+import sys as _sys
+from pathlib import Path as _Path
+REPO = str(_Path(__file__).resolve().parents[2])
+_sys.path.insert(0, REPO)
 import os, sys, types, numpy as np, time
 p = types.ModuleType("pynput"); kb = types.ModuleType("pynput.keyboard")
 kb.Key = type("Key", (), {}); kb.Listener = type("Listener", (), {"__init__": lambda *a,**k: None, "start": lambda *a,**k: None, "stop": lambda *a,**k: None})
 p.keyboard = kb; sys.modules["pynput"]=p; sys.modules["pynput.keyboard"]=kb
-sys.path.insert(0, "/root/opencr-mujoco-main")
+sys.path.insert(0, f"{REPO}")
 import mujoco
 from opencr_mujoco.controllers.tdcr_ik_controller_c2 import TDCRIKControllerC2
 
@@ -17,7 +21,7 @@ TASK       = os.environ.get("TASK", "stiffness")
 TAG        = os.environ.get("TAG", "test")
 OUT_DIR    = os.environ.get("OUT_DIR", f"DATA/{MODE}/{TASK}")
 
-SCENE = "/root/opencr-mujoco-main/assets/tdcr/tdcr_3seg.xml"
+SCENE = f"{REPO}/assets/tdcr/tdcr_3seg.xml"
 DT=0.001; FPS=50; PERIOD=10.0; SIM_T=20.0
 SIGMA_M = SIGMA_MM * 0.001
 

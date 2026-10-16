@@ -1,6 +1,10 @@
+import sys as _sys
+from pathlib import Path as _Path
+REPO = str(_Path(__file__).resolve().parents[2])
+_sys.path.insert(0, REPO)
 import os, re, glob, shutil
 
-ROOT = "/root/opencr-mujoco-main"
+ROOT = f"{REPO}"
 SRC_DIRS = glob.glob(f"{ROOT}/logs/*/") + [f"{ROOT}/results_official_dt/",
              f"{ROOT}/results_noise_v2/", f"{ROOT}/results_noise_obs/"]
 

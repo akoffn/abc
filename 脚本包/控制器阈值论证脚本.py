@@ -5,6 +5,10 @@
   2. 算正常组(S≤1.5) p95 和退化组(S≥2.2) p5
   3. 画图（含阈值线 160/70、安全裕度、过渡区）
 """
+import sys as _sys
+from pathlib import Path as _Path
+REPO = str(_Path(__file__).resolve().parents[1])
+_sys.path.insert(0, REPO)
 import numpy as np, glob, csv
 from pathlib import Path
 import matplotlib
@@ -16,8 +20,8 @@ plt.rcParams.update({'font.family':'STIXGeneral','mathtext.fontset':'stix',
     'legend.fontsize':9,'axes.grid':True,'grid.alpha':0.25,
     'axes.linewidth':0.9,'savefig.bbox':'tight'})
 
-D = Path("/root/opencr-mujoco-main/数据集/C1/刚度扫描_8字")
-OUT_CSV = Path("/root/opencr-mujoco-main/数据集/28/analysis/threshold_bounds.csv")
+D = Path(f"{REPO}/数据集/C1/刚度扫描_8字")
+OUT_CSV = Path(f"{REPO}/数据集/28/analysis/threshold_bounds.csv")
 
 def rolling(x, w=20):
     o = np.full_like(x, np.nan, dtype=float)
@@ -105,7 +109,7 @@ ax.set_ylim(40, 200)
 ax.legend(loc='lower right', framealpha=0.92, fontsize=8.5)
 
 fig.tight_layout()
-out = "/root/opencr-mujoco-main/paper_figs/fig3_threshold.pdf"
+out = f"{REPO}/paper_figs/fig3_threshold.pdf"
 fig.savefig(out)
 fig.savefig(out.replace('.pdf','.png'), dpi=300)
 print(f"图 -> {out}")

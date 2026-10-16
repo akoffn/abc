@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """C2 泛化性图：圆形轨迹 + 噪声扫描（优化版）"""
+import sys as _sys
+from pathlib import Path as _Path
+REPO = str(_Path(__file__).resolve().parents[2])
+_sys.path.insert(0, REPO)
 import glob
 import numpy as np
 from pathlib import Path
@@ -13,8 +17,8 @@ plt.rcParams.update({'font.family':'STIXGeneral','mathtext.fontset':'stix',
     'axes.grid':True,'grid.alpha':0.25,'axes.linewidth':0.9,
     'savefig.bbox':'tight','savefig.pad_inches':0.02})
 
-DATA = Path("/root/opencr-mujoco-main/数据集/C2/S=2.5噪声扫描圆形")
-OUT  = Path("/root/opencr-mujoco-main/paper_figs/fig4_c2_circle_noise.pdf")
+DATA = Path(f"{REPO}/数据集/C2/S=2.5噪声扫描圆形")
+OUT  = Path(f"{REPO}/paper_figs/fig4_c2_circle_noise.pdf")
 
 
 def meta(d, k, default=np.nan):
