@@ -1,9 +1,11 @@
 # Contributing to opencr-mujoco
 
-Thanks for helping improve `opencr-mujoco`. This repository is an academic
-research codebase, so the most valuable contributions are clear, reproducible,
-and conservative: small fixes, tests that lock down behavior, documentation
-that helps another researcher reproduce results, and focused new examples.
+Thanks for helping improve `opencr-mujoco`. This repository is the codebase for
+the paper *Condition-Number-Triggered Gain Scheduling for Inverse Kinematics
+Control of Tendon-Driven Continuum Robots*, so the most valuable contributions
+are clear, reproducible, and conservative: small fixes, tests that lock down
+behavior, documentation that helps another researcher reproduce the paper's
+results (the C1-vs-C2 comparison in the paper), and focused new examples.
 
 ## Ways to contribute
 
@@ -15,6 +17,9 @@ that helps another researcher reproduce results, and focused new examples.
   or system-identification data handling.
 - Propose new robot configurations or scenes through JSON configs rather than
   committing generated XMLs.
+- Reproduce or extend the paper's stiffness-sweep experiments (e.g., new
+  stiffness levels, trajectories, or noise settings) and report results against
+  the same Table 1 / Table 2 conventions used in the paper.
 
 ## Development setup
 
@@ -53,9 +58,12 @@ pytest tests/unit/test_generator_physics.py tests/unit/test_evaluation_correctne
 - Do not commit large website videos. Upload them as GitHub Release assets and
   link to the release URL from `docs/index.html`.
 - Do not commit local editor, environment, or coding-agent files.
+- Keep paper-related experiment data under `数据集/`, `脚本包/`, and
+  `paper_figs/` so the paper's tables and figures stay reproducible; do not
+  scatter ad-hoc result files at the repository root.
 
 ## Pull request style
 
 Keep PRs narrow when possible. A good PR description says what changed, why it
-changed, how it was tested, and whether it affects published evaluation
-conventions or reference data.
+changed, how it was tested, and whether it affects the paper's evaluation
+conventions, tables (Table 1 / Table 2), or reference data.
