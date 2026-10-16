@@ -1,5 +1,7 @@
 # OpenCR-MuJoCo
 
+> **This repository is the codebase for the paper *"Condition-Number-Triggered Gain Scheduling for Inverse Kinematics Control of Tendon-Driven Continuum Robots"* (EI conference).** The included experiments reproduce the C1 (native controller) vs C2 (cond_J-triggered gain scheduling) comparison: C2 reduces tracking error in the degraded stiffness region by 42%–71% and zeroes the saturation rate.
+
 <p align="center">
   <img src="docs/media/tdcr_tip_trace.gif" width="32%" alt="TDCR tracing a figure-8 with its tip (closed-loop task-space IK)"/>
   <img src="docs/media/franka_tdcr_trace.gif" width="32%" alt="Station-keeping: the Franka sweeps a figure-8 while the TDCR pins its tip to the red point"/>
@@ -151,6 +153,28 @@ testing, and repository hygiene notes.
 MIT License — see [LICENSE](LICENSE). The bundled Franka Panda meshes under
 `assets/franka_assets/` are from franka_ros (Apache 2.0 — see
 `assets/franka_assets/LICENSE.md`).
+
+## Citation
+
+If you use this codebase or its results in your research, please cite:
+
+**Condition-Number-Triggered Gain Scheduling for Inverse Kinematics Control of Tendon-Driven Continuum Robots**
+
+- Authors: *[to be added]*
+- Affiliation: *[to be added]*
+- Venue: EI-indexed conference, *[to be added]*
+- Year: *[to be added]*
+- Paper link: *[to be added]*
+
+```bibtex
+@inproceedings{tdcr_condj_gain_scheduling,
+  title     = {Condition-Number-Triggered Gain Scheduling for Inverse
+               Kinematics Control of Tendon-Driven Continuum Robots},
+  author    = {[to be added]},
+  booktitle = {[to be added]},
+  year      = {[to be added]},
+}
+```
 
 ## Acknowledgments
 
