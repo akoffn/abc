@@ -1,6 +1,6 @@
-# Contributing to opencr-mujoco
+# Contributing to the TDCR gain-scheduling paper code
 
-Thanks for helping improve `opencr-mujoco`. This repository is the codebase for
+Thanks for helping improve this repository. It is the codebase for
 the paper *Condition-Number-Triggered Gain Scheduling for Inverse Kinematics
 Control of Tendon-Driven Continuum Robots*, so the most valuable contributions
 are clear, reproducible, and conservative: small fixes, tests that lock down
