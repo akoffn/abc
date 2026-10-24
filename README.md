@@ -129,11 +129,11 @@ python 脚本包/全扫描/plot_all.py                 # overview panels used to
 |---|---|---|
 | Table 1 | Core table, S = 1.0/1.5/2.2/2.5/3.0: trigger ratio, C1 / Fix20 / C2 error and saturation | `python 脚本包/28评估脚本/表1.py` (prints table + LaTeX, writes `数据集/28/analysis/table1_final.csv`) |
 | Table 2 | Extension of Table 1 into the saturated regime, S = 4.0–5.0: C1 vs C2 error, saturation, and relative reduction | No dedicated script is shipped. Recompute from `数据集/C1/刚度扫描_8字` and `数据集/C2/刚度扫描_8字` with the same convention as `表1.py` (20-step window mean, first 50 steps discarded as warm-up, `err_true.mean()`, `sat_flag.mean()`). Reference values: `paper_figs/tables/T12_c2_S_sweep.csv`, `数据集/28/analysis/` |
-| Table 3 | Per-axis performance across the twenty-eight configurations at S = 2.5: configs, pairs over all levels, Δ range of C2 over C1, C1 saturation | Derived table: `数据集/28/analysis/table3_config_axes.csv`; full 88-pair list: `数据集/28/analysis/all_pairs.csv` |
+| Table 3 | Per-axis performance across the twenty-eight configurations at S = 2.5: configs, pairs over all levels, Δ range of C2 over C1, C1 saturation | Derived table: `数据集/28/analysis/table3_config_axes.csv`; full 88-pair list: `数据集/28/analysis/all_pairs.csv`. Aggregated by `python 脚本包/28构型泛化/_build_pairs.py` (+ `_ingest_ws2.py`) |
 | Figure 1 | Percentile margins of the 20-step mean `cond_slide` on the dense 24-point calibration set used to set `C_up` / `C_down` (evaluation levels excluded) | `python 脚本包/控制器阈值论证脚本.py` → `paper_figs/fig3_threshold.pdf` / `.png` |
 | Figure 2 | C1 stiffness sweep: mean error vs S, with the transition band and the degraded region shaded | Pre-rendered: `paper_figs/fig1_S_err.png` (plotting script not shipped) |
 | Figure 3 | C1 vs C2 over the full sweep S = 1.0–5.0 | Pre-rendered: `paper_figs/fig2_C1_vs_C2.png` (plotting script not shipped) |
-| Figure 4 | All eighty-eight configuration/stiffness pairs; x: sustained saturation ratio of C1 (log scale), y: error reduction of C2 over C1, hollow: no gain, colour: κ95 above/below 160 | Pre-rendered: `paper_figs/fig4_all_pairs.png`; data: `数据集/28/analysis/all_pairs.csv` |
+| Figure 4 | All eighty-eight configuration/stiffness pairs; x: sustained saturation ratio of C1 (log scale), y: error reduction of C2 over C1, hollow: no gain, colour: κ95 above/below 160 | Data + plotting: `脚本包/28构型泛化/_fig_pairs.py` (reads `数据集/28/analysis/all_pairs.csv`); pre-rendered: `paper_figs/fig4_all_pairs.png` |
 
 > Note: the file stems under `paper_figs/` follow the plotting order in which
 > the figures were produced, **not** the numbering in the paper.
@@ -159,6 +159,13 @@ python 脚本包/全扫描/plot_all.py                 # overview panels used to
   `gain` flag), and `数据集/28/analysis/table3_config_axes.csv` is the paper's
   Table 3 (Geometry / Held-out paths / Workspace / Contact-load-tendon / Total).
   The two switching thresholds were never retuned across these runs.
+- **Scripts for the 28 configurations:** `脚本包/28构型泛化/` holds the
+  experiment drivers (`traj_family.py`, `B1_云端运行_精简版.py`, `_exp2b.py`,
+  `_run_ws2.py`, `_payload_pen.py`, `_exp_tendon.py`), the aggregation and
+  plotting tools, and the raw cloud logs under `logs/`. Its README lists which
+  script produces which of the seven groups, the gate criterion
+  (κ95 > 160 and C1 saturation ≥ 1%), the four misclassifications out of 88
+  pairs, and the reproduction commands.
 - Derived tables and figure sources: `数据集/28/analysis/`,
   `paper_figs/tables/`. Figures are written to `paper_figs/`.
 
