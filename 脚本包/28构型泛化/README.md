@@ -35,6 +35,32 @@ _exp_tendon.py（肌腱）    ─┘
 论文口径的分轴归并：Geometry 8（in-sample）/ Held-out 4 / Workspace 4（workspace + workspace2）/
 Contact-load-tendon 12（contact 4 + loading 3 + tendon 5）。
 
+## 构型图谱（28 个构型一览）
+
+![28-configuration map](fig_configs.png)
+
+上图按六个轴画出全部 28 个构型（矢量版见 `fig_configs.svg`，逐构型清单见 `configurations_28.csv`）。
+读图要点：
+
+- **蓝线 = 该构型的评估路径，灰虚线 = 标定 8 字**（统一比例尺，每格附 50 mm 标尺），
+  这样"动了一个量、动了多少"一眼可读。每格左下角标注该构型的对数与 S = 2.5 的 Δ(C2−C1)。
+- **A 轨迹族（in-sample 8）**：8 字轨迹只有 5 个可调量
+  `c + a_x·sin(φ)·u + a_y·sin(k·φ+ψ)·v`——尺度（×0.70/×1.40）、宽高比（×0.55）、
+  弯曲平面（45°/XZ 正交）、中心（+25 mm z）、频率比 k=3（曲率反转 4 次）。
+  每次只动一个量，其余冻结，差异可归因；`base` 与论文原 8 字逐点等价，作对账闸门。
+- **B held-out 4**：`ar_fat` / `off_x` 本来就在族里但从未跑过，`rot90` / `circ55`
+  由 `B1_云端运行_精简版.py` 在内存里补进 FAMILY——四个形状都从未参与阈值标定。
+- **C 工作空间 4**：整条路径平移 ±60 mm（x−/x+/y+/z−；z 向平移在 XY 视图里不可见，
+  用橙色箭头标出）。`off_x60` 来自 v1 脚本（无接触分支，v1/v2 等价，见"废弃说明"）。
+- **D 接触 4**：8 mm 外生球（mocap）沿名义路径压入，压入深度 = R_link + R_ball − 4 mm；
+  `con_x` 的接触在 t = 12 s 才发生（自由→接触转换），`fix_near` 是全程接触的固定球。
+- **E 肌腱 5**：三段各 3 根腱共 9 根。dropout 类把某段的一根置零（打叉），
+  gain 类把全部 9 根的有效行程缩放到 85% / 115%（点相对虚线参考圆的位置）。
+- **F 负载 3**：球以 2/4/6 mm 压入深度顶住手臂（球心距轴 = 12/10/8 mm），
+  压得越深接触载荷越大。
+
+贯穿所有面板的一条规则：**阈值 C_up = 160 / C_down = 70 从第一个构型到最后一个构型一次未调**。
+
 ## 判据
 
 ```
@@ -132,4 +158,6 @@ v1 的 `fix_near` 与 `fix_off` 还出现过参数未生效（两行数值相同
 | `_fig_pairs.py` | 单栏 88 对散点图 |
 | `_fig5_cloud.py` | 88 对判据平面图（文件顶部含最终 88 对数值表） |
 | `family_envelope.csv` | in-sample 25 对汇总，`_build_pairs.py` 的输入 |
+| `fig_configs.png` / `fig_configs.svg` | 28 构型图谱（上图；SVG 为矢量版） |
+| `configurations_28.csv` | 28 构型逐条清单：所属轴 / 变化量 / 对数 / 负责脚本 |
 | `logs/` | 各组云端实跑日志 |

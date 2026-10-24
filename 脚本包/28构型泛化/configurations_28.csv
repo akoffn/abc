@@ -1,0 +1,29 @@
+config,axis,what_changed,pairs,script
+base,trajectory,"calibration member: the original figure-eight, a = 70/37.5 mm, k = 2",4,traj_family.py
+scale_s,trajectory,"both amplitudes x 0.70 (inner workspace, larger curvature)",3,traj_family.py
+scale_l,trajectory,"both amplitudes x 1.40 (outer workspace, smaller curvature)",3,traj_family.py
+ar_thin,trajectory,"a_y x 0.55, aspect 0.59, sharper crossing",3,traj_family.py
+tilt45,trajectory,bending plane tilted 45 deg,3,traj_family.py
+tilt90,trajectory,"bending plane = XZ, orthogonal bending",3,traj_family.py
+off_z,trajectory,path centre +25 mm along z,3,traj_family.py
+k3,trajectory,"k = 3, three lobes, four curvature-sign reversals",3,traj_family.py
+ar_fat,held-out,"a_y x 1.60, aspect 1.71, blunter crossing",3,B1_云端运行_精简版.py
+circ55,held-out,"circular path, r = 55 mm (k = 1)",3,B1_云端运行_精简版.py
+off_x,held-out,path centre +25 mm along x,3,B1_云端运行_精简版.py
+rot90,held-out,"plane axes swapped (u = y, v = x)",3,B1_云端运行_精简版.py
+off_x60,workspace,whole path translated +60 mm along x,3,"_exp_contact_ws.py (v1, no contact)"
+ws_xm60,workspace,whole path translated -60 mm along x,3,_run_ws2.py
+ws_yp60,workspace,whole path translated +60 mm along y,3,_run_ws2.py
+ws_zm60,workspace,whole path translated -60 mm along z,3,_run_ws2.py
+con_x,contact,"8 mm exogenous sphere pushed along +x, contact onset t = 12 s",3,_exp2b.py
+con_y,contact,"sphere pushed along +y, contact from t = 0",3,_exp2b.py
+con_z,contact,"sphere pushed along +z, contact from t = 0",3,_exp2b.py
+fix_near,contact,fixed sphere touching the nominal path (persistent contact),1,_exp2b.py
+drop_s1_t2,tendon,segment 1 uses 2 of 3 tendons (t2 slack),4,_exp_tendon.py
+drop_s3_t0,tendon,segment 3 uses 2 of 3 tendons (t0 slack),4,_exp_tendon.py
+drop_s1s3,tendon,segments 1 and 3 both 2 of 3,4,_exp_tendon.py
+gain_085,tendon,all nine tendons at 85% effective stroke,4,_exp_tendon.py
+gain_115,tendon,all nine tendons at 115% effective stroke,4,_exp_tendon.py
+pen2,payload,sphere indentation 2 mm (light contact load),3,_payload_pen.py
+pen4,payload,sphere indentation 4 mm,3,_payload_pen.py
+pen6,payload,sphere indentation 6 mm (heavy contact load),3,_payload_pen.py

@@ -159,6 +159,12 @@ python 脚本包/全扫描/plot_all.py                 # overview panels used to
   `gain` flag), and `数据集/28/analysis/table3_config_axes.csv` is the paper's
   Table 3 (Geometry / Held-out paths / Workspace / Contact-load-tendon / Total).
   The two switching thresholds were never retuned across these runs.
+- **Configuration map:** `脚本包/28构型泛化/fig_configs.png` (vector: `fig_configs.svg`)
+  draws all 28 configurations on one sheet — for every panel the blue curve is the
+  evaluated path and the grey dashed curve is the calibration figure-eight at the same
+  scale, so how far each factor was moved is readable at a glance. Each panel also
+  carries its pair count and the Δ(C2−C1) at S = 2.5. A per-configuration list
+  (axis, what changed, pairs, responsible script) is `脚本包/28构型泛化/configurations_28.csv`.
 - **Scripts for the 28 configurations:** `脚本包/28构型泛化/` holds the
   experiment drivers (`traj_family.py`, `B1_云端运行_精简版.py`, `_exp2b.py`,
   `_run_ws2.py`, `_payload_pen.py`, `_exp_tendon.py`), the aggregation and
