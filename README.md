@@ -165,6 +165,9 @@ python 脚本包/全扫描/plot_all.py                 # overview panels used to
   scale, so how far each factor was moved is readable at a glance. Each panel also
   carries its pair count and the Δ(C2−C1) at S = 2.5. A per-configuration list
   (axis, what changed, pairs, responsible script) is `脚本包/28构型泛化/configurations_28.csv`.
+
+  <img src="%E8%84%9A%E6%9C%AC%E5%8C%85/28%E6%9E%84%E5%9E%8B%E6%B3%9B%E5%8C%96/fig_configs.png" width="100%" alt="The 28 configurations of the generalization study">
+
 - **Scripts for the 28 configurations:** `脚本包/28构型泛化/` holds the
   experiment drivers (`traj_family.py`, `B1_云端运行_精简版.py`, `_exp2b.py`,
   `_run_ws2.py`, `_payload_pen.py`, `_exp_tendon.py`), the aggregation and
