@@ -1,0 +1,6 @@
+axis,configs,pairs_all_S,reduction_at_S2.5_pct,c1_sat_at_S2.5_pct
+Geometry,8,25,44.3-82.9,4.2-76.2
+Held-out paths,4,12,58.7-85.7,14.0-48.3
+Workspace,4,12,0.0-80.3,0.0-84.0
+Contact/load/tendon,12,39,-5.6-84.4,1.4-86.0
+Total,28,88,26/28 positive (31.0-85.7),0.0-86.0
